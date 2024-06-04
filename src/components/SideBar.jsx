@@ -1,7 +1,7 @@
 const SideBar = () => {
   return (
     <div className="h-svh min-w-72 flex flex-col items-center bg-slate-100 text-black">
-      <div class="w-11/12 items-center divide-y py-5 space-y-5 divide-gray-900/10">
+      <div className="w-11/12 items-center divide-y py-5 space-y-5 divide-gray-900/10">
         <h1 className="font-mono font-bold text-lg text-center ">
           Algo Visualizer
         </h1>

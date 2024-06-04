@@ -1,7 +1,6 @@
 "use client"; // Add this directive at the top
 
-import React from "react";
-import Head from "next/head";
+import React, { useEffect, useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -42,30 +41,62 @@ export const options = {
   },
 };
 
-const labels = ["January", "February", "March", "April", "May", "June", "July"];
+const labels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: "Dataset 1",
-      data: labels.map(() => faker.number.int({ min: -1000, max: 1000 })), // Use faker.number.int
-      backgroundColor: "rgb(255, 99, 132)",
-    },
-    {
-      label: "Dataset 2",
-      data: labels.map(() => faker.number.int({ min: -1000, max: 1000 })), // Use faker.number.int
-      backgroundColor: "rgb(25, 99, 132)",
-    },
-  ],
+const sleep = (ms) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
 const App = () => {
+  const [data, setData] = useState({
+    labels,
+    datasets: [
+      {
+        label: "Dataset",
+        data: labels.map(() => faker.number.int({ min: 0, max: 1000 })),
+        backgroundColor: "rgb(255, 99, 132)",
+      },
+    ],
+  });
+
+  useEffect(() => {
+    const sortDataWithDelay = async () => {
+      const array = [...data.datasets[0].data];
+      let change = true;
+      while (change) {
+        change = false;
+        for (let i = 0; i < array.length - 1; i++) {
+          await sleep(500);
+          if (array[i] > array[i + 1]) {
+            const temp = array[i];
+            array[i] = array[i + 1];
+            array[i + 1] = temp;
+            change = true;
+            setData((prevData) => ({
+              ...prevData,
+              datasets: prevData.datasets.map((dataset) => ({
+                ...dataset,
+                data: [...array],
+              })),
+            }));
+          }
+        }
+      }
+    };
+
+    sortDataWithDelay();
+  }, []);
+
   return (
     <>
       <main className="flex flex-row">
         <SideBar />
-        <Bar options={options} data={data} />
+        <Bar
+          className="max-w-screen-md max-h-screen"
+          options={options}
+          data={data}
+          updateMode="active"
+        />
       </main>
     </>
   );
