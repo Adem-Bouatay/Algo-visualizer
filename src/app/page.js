@@ -48,44 +48,69 @@ const sleep = (ms) => {
 };
 
 const App = () => {
+  const [cursor, setCursor] = useState([0, 1]);
+  const [sortedData, setSortedData] = useState(
+    labels.map(() => faker.number.int({ min: 0, max: 1000 }))
+  );
+
+  const cursorColor = (context) => {
+    const index = context.dataIndex;
+    return cursor.includes(index) ? "red" : "green";
+  };
+
   const [data, setData] = useState({
     labels,
     datasets: [
       {
         label: "Dataset",
-        data: labels.map(() => faker.number.int({ min: 0, max: 1000 })),
-        backgroundColor: "rgb(255, 99, 132)",
+        data: sortedData,
+        backgroundColor: cursorColor,
       },
     ],
   });
 
   useEffect(() => {
-    const sortDataWithDelay = async () => {
-      const array = [...data.datasets[0].data];
+    const bubbleSort = async () => {
+      const array = [...sortedData];
       let change = true;
       while (change) {
         change = false;
         for (let i = 0; i < array.length - 1; i++) {
-          await sleep(500);
+          setCursor([i, i + 1]);
+          await sleep(200);
           if (array[i] > array[i + 1]) {
             const temp = array[i];
             array[i] = array[i + 1];
             array[i + 1] = temp;
             change = true;
-            setData((prevData) => ({
-              ...prevData,
-              datasets: prevData.datasets.map((dataset) => ({
-                ...dataset,
-                data: [...array],
-              })),
-            }));
+            setSortedData([...array]);
           }
         }
       }
+      setCursor([]);
     };
-
-    sortDataWithDelay();
+    bubbleSort();
   }, []);
+
+  useEffect(() => {
+    setData((prevData) => ({
+      ...prevData,
+      datasets: prevData.datasets.map((dataset) => ({
+        ...dataset,
+        data: sortedData,
+      })),
+    }));
+  }, [sortedData]);
+
+  useEffect(() => {
+    setData((prevData) => ({
+      ...prevData,
+      datasets: prevData.datasets.map((dataset) => ({
+        ...dataset,
+        backgroundColor: cursorColor,
+      })),
+    }));
+  }, [cursor]);
 
   return (
     <>
