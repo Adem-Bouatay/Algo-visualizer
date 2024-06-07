@@ -134,12 +134,19 @@ const App = () => {
     <>
       <main className="flex flex-row">
         <SideBar />
-        <div className="flex flex-row w-5/12 p-5">
+        <div className="flex flex-col w-5/12 p-5 space-y-4 items-center">
           <Bar options={options} data={data} updateMode="active" />
+          <h1 className="text-lg font-bold text-gray-400">Log:</h1>
+          <div className="w-full  h-full">
+            <textarea
+              className="w-full h-full bg-[#1b1b1b] resize-none"
+              disabled
+            ></textarea>
+          </div>
         </div>
-        <div className="flex-1 bg-gray-100 rounded-l-md p-3 text-white">
+        <div className="flex-1 bg-gray-100  p-3 text-white">
           <textarea
-            className="w-full h-full resize-none rounded-md p-2 bg-black"
+            className="w-full h-full resize-none p-2 bg-[#1b1b1b]"
             disabled
           >
             {`const array = [...sortedData];
