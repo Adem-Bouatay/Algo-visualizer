@@ -129,10 +129,10 @@ const Chart = ({ initialData }) => {
     ],
   });
 
-  useEffect(() => {
+  /*useEffect(() => {
     //bubbleSort();
     selectionSort();
-  }, []);
+  }, []);*/
 
   useEffect(() => {
     setData((prevData) => ({
@@ -156,6 +156,12 @@ const Chart = ({ initialData }) => {
 
   return (
     <>
+      <button
+        className="bg-slate-50 text-black rounded-lg p-2 text-sm font-semibold hover:bg-slate-300 active:bg-red-400"
+        onClick={selectionSort}
+      >
+        ►
+      </button>
       <Bar options={options} data={data} updateMode="active" />
       <h1 className="text-lg font-bold text-[#646464]" onClick={selectionSort}>
         Log:
