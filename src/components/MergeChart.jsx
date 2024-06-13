@@ -46,28 +46,16 @@ const Chart = ({ initialData }) => {
   const [log, setLog] = useState(
     `original array = [${initialData.join(", ")}]\n`
   );
-
-  const insertionSort = async () => {
-    const array = [...sortedData];
-    let newLog = log;
-    for (let i = 1; i < array.length; i++) {
-      for (let j = i; j >= 0; j--) {
-        setCursor([i, j]);
-        await sleep(1000);
-        if (array[j - 1] > array[j]) {
-          const temp = array[j - 1];
-          array[j - 1] = array[j];
-          array[j] = temp;
-          setSortedData([...array]);
-          newLog += `Swapped ${array[j - 1]} and ${array[j]}\n`;
-          setLog(newLog);
-        } else {
-          break;
-        }
-      }
-    }
-
-    setCursor([]);
+  const mergeSort = async () => {
+    const sorter = (array) => {
+      /* const middleIndex = Math.round(array.length / 2)
+        const left = array.slice(0,middleIndex)
+        const right = array.slice(middleIndex)
+        
+        if (left[0] > right[1]){
+            return right.concat
+        }*/
+    };
   };
 
   const cursorColor = (context) => {
@@ -114,7 +102,7 @@ const Chart = ({ initialData }) => {
     <>
       <button
         className="bg-slate-50 text-black rounded-lg p-2 text-sm font-semibold hover:bg-slate-300 active:bg-red-400"
-        onClick={insertionSort}
+        onClick={mergeSort}
       >
         ►
       </button>

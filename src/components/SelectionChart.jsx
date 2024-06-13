@@ -32,20 +32,6 @@ export const options = {
     legend: {
       display: false,
     },
-    scales: {
-      x: {
-        ticks: {
-          font: {
-            size: 30, // set the font size for x-axis labels
-          },
-        },
-      },
-      y: {
-        ticks: {
-          color: "black",
-        },
-      },
-    },
   },
   responsive: true,
 };
