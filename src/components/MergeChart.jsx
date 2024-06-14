@@ -47,14 +47,36 @@ const Chart = ({ initialData }) => {
     `original array = [${initialData.join(", ")}]\n`
   );
   const mergeSort = async () => {
+    const merge = (left, right) => {
+      let result = [];
+      let indexLeft = 0;
+      let indexRight = 0;
+
+      while (indexLeft < left.length && indexRight < right.length) {
+        if (left[indexLeft] < right[indexRight]) {
+          result.push(left[indexLeft]);
+          indexLeft++;
+        } else {
+          result.push(right[indexRight]);
+          indexRight++;
+        }
+      }
+
+      return result
+        .concat(left.slice(indexLeft))
+        .concat(right.slice(indexRight));
+    };
+
     const sorter = (array) => {
-      /* const middleIndex = Math.round(array.length / 2)
-        const left = array.slice(0,middleIndex)
-        const right = array.slice(middleIndex)
-        
-        if (left[0] > right[1]){
-            return right.concat
-        }*/
+      if (array.length <= 1) {
+        return array;
+      }
+
+      const middleIndex = Math.floor(array.length / 2);
+      const left = array.slice(0, middleIndex);
+      const right = array.slice(middleIndex);
+
+      return merge(sorter(left), sorter(right));
     };
   };
 
