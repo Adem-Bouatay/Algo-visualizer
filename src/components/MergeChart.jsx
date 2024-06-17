@@ -23,7 +23,7 @@ export const options = {
   plugins: {
     title: {
       display: true,
-      text: "Insertion Sort",
+      text: "Merge Sort",
       font: {
         size: 18,
         weight: "bold",
