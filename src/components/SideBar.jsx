@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const SideBar = () => {
   return (
     <div className="h-svh min-w-80 flex flex-col items-center bg-slate-100 text-black">
@@ -6,21 +8,36 @@ const SideBar = () => {
           Algo Visualizer
         </h1>
         <div className="flex flex-col space-y-2 font-medium">
-          <button className="p-2 text-center mt-5 hover:bg-pink-300 rounded-md ">
+          <Link
+            href="/sort/bubble"
+            className="p-2 text-center mt-5 hover:bg-pink-300 rounded-md "
+          >
             Bubble Sort
-          </button>
-          <button className="p-2 text-center hover:bg-pink-300 rounded-md">
+          </Link>
+          <Link
+            href="/sort/selection"
+            className="p-2 text-center hover:bg-pink-300 rounded-md"
+          >
             Selection Sort
-          </button>
-          <button className="p-2 text-center hover:bg-pink-300 rounded-md">
+          </Link>
+          <Link
+            href="/sort/insertion"
+            className="p-2 text-center hover:bg-pink-300 rounded-md"
+          >
             Insertion Sort
-          </button>
-          <button className="p-2 text-center hover:bg-pink-300 rounded-md">
+          </Link>
+          <Link
+            href="/sort/merge"
+            className="p-2 text-center hover:bg-pink-300 rounded-md"
+          >
             Merge Sort
-          </button>
-          <button className="p-2 text-center hover:bg-pink-300 rounded-md">
+          </Link>
+          <Link
+            href="/sort/quick"
+            className="p-2 text-center hover:bg-pink-300 rounded-md"
+          >
             Quick Sort
-          </button>
+          </Link>
         </div>
       </div>
     </div>

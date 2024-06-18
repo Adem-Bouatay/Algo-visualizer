@@ -1,16 +1,9 @@
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata = {
-  title: "Algo Visualizer",
-  description: "",
-};
-
-export default function RootLayout({ children }) {
+import SideBar from "@/components/SideBar";
+export default function SortLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+    <main className="flex flex-row">
+      <SideBar />
+      {children}
+    </main>
   );
 }

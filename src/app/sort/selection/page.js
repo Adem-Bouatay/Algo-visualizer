@@ -11,16 +11,14 @@ const data = labels.map(() => faker.number.int({ min: 0, max: 100 }));
 const App = () => {
   return (
     <>
-      <main className="flex flex-row">
-        <SideBar />
-        <div className="flex flex-col w-5/12 p-5 space-y-4 items-center">
-          <Chart initialData={data} labels={data} />
-        </div>
-        <div className="flex-1 p-5 border-l-2 rounded-l-3xl text-white">
-          <textarea
-            className="w-full h-full resize-none p-2 bg-[#151515]"
-            disabled
-            defaultValue={`const array = [...sortedData];
+      <div className="flex flex-col w-5/12 p-5 space-y-4 items-center">
+        <Chart initialData={data} labels={data} />
+      </div>
+      <div className="flex-1 p-5 border-l-2 rounded-l-3xl text-white">
+        <textarea
+          className="w-full h-full resize-none p-2 bg-[#151515]"
+          disabled
+          defaultValue={`const array = [...sortedData];
               let change = true;
               while (change) {
                 change = false;
@@ -37,9 +35,8 @@ const App = () => {
                 }
               }
             `}
-          />
-        </div>
-      </main>
+        />
+      </div>
     </>
   );
 };
