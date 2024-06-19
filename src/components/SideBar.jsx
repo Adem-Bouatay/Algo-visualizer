@@ -38,6 +38,24 @@ const SideBar = () => {
           >
             Quick Sort
           </Link>
+          <Link
+            href="/search/linear"
+            className="p-2 text-center hover:bg-blue-300 rounded-md"
+          >
+            Linear Search
+          </Link>
+          <Link
+            href="/search/binary"
+            className="p-2 text-center hover:bg-blue-300 rounded-md"
+          >
+            Binary Search
+          </Link>
+          <Link
+            href="/search/ternary"
+            className="p-2 text-center hover:bg-blue-300 rounded-md"
+          >
+            Ternary Search
+          </Link>
         </div>
       </div>
     </div>
