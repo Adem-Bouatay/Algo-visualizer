@@ -59,10 +59,13 @@ const Chart = ({ initialData }) => {
       });
 
       for (let i = minIndex, j = 0; i <= maxIndex; i++, j++) {
+        setCursor([minIndex, i]);
         result[i] = part[j];
+        await sleep(250);
       }
       setSortedData(result);
-      await sleep(1000);
+      setCursor([]);
+      await sleep(400);
     };
 
     const merge = async (left, right) => {
@@ -96,7 +99,6 @@ const Chart = ({ initialData }) => {
       const middleIndex = Math.floor(array.length / 2);
       const left = array.slice(0, middleIndex);
       const right = array.slice(middleIndex);
-
       return await merge(await sorter(left), await sorter(right));
     };
 
