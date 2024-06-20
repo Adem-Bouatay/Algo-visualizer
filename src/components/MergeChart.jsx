@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -43,11 +43,29 @@ const sleep = (ms) => {
 const Chart = ({ initialData }) => {
   const [cursor, setCursor] = useState([-1, -1]);
   const [sortedData, setSortedData] = useState(initialData);
+  const sortedDataRef = useRef(initialData);
   const [log, setLog] = useState(
     `original array = [${initialData.join(", ")}]\n`
   );
   const mergeSort = async () => {
-    const merge = (left, right) => {
+    const sliceAndDice = async (part) => {
+      const result = [...sortedDataRef.current];
+      let minIndex = result.indexOf(part[0]);
+      let maxIndex = result.indexOf(part[part.length - 1]);
+      part.forEach((element) => {
+        const index = result.indexOf(element);
+        if (minIndex > index) minIndex = index;
+        else if (maxIndex < index) maxIndex = index;
+      });
+
+      for (let i = minIndex, j = 0; i <= maxIndex; i++, j++) {
+        result[i] = part[j];
+      }
+      setSortedData(result);
+      await sleep(1000);
+    };
+
+    const merge = async (left, right) => {
       let result = [];
       let indexLeft = 0;
       let indexRight = 0;
@@ -62,12 +80,15 @@ const Chart = ({ initialData }) => {
         }
       }
 
-      return result
+      const returnedResult = result
         .concat(left.slice(indexLeft))
         .concat(right.slice(indexRight));
+
+      await sliceAndDice(returnedResult);
+      return returnedResult;
     };
 
-    const sorter = (array) => {
+    const sorter = async (array) => {
       if (array.length <= 1) {
         return array;
       }
@@ -76,8 +97,10 @@ const Chart = ({ initialData }) => {
       const left = array.slice(0, middleIndex);
       const right = array.slice(middleIndex);
 
-      return merge(sorter(left), sorter(right));
+      return await merge(await sorter(left), await sorter(right));
     };
+
+    sorter([...sortedData]);
   };
 
   const cursorColor = (context) => {
@@ -101,6 +124,7 @@ const Chart = ({ initialData }) => {
   });
 
   useEffect(() => {
+    sortedDataRef.current = sortedData;
     setData((prevData) => ({
       labels: sortedData,
       datasets: prevData.datasets.map((dataset) => ({
