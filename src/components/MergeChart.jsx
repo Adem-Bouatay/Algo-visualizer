@@ -155,7 +155,7 @@ const Chart = ({ initialData }) => {
         ►
       </button>
       <Bar options={options} data={data} updateMode="active" />
-      <h1 className="text-lg font-bold text-[#646464]">Log:</h1>
+      <h1 className="text-lg font-bold text-[#646464]">Log: too lazy</h1>
       <div className="w-full h-full">
         <textarea
           className="w-full h-full bg-[#151515] resize-none p-3"
