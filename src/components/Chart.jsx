@@ -19,24 +19,23 @@ ChartJS.register(
   Legend
 );
 
-export const options = {
-  plugins: {
-    title: {
-      display: true,
-      text: "Bubble Sort",
-      font: {
-        size: 18,
-        weight: "bold",
+const Chart = ({ data, name }) => {
+  const options = {
+    plugins: {
+      title: {
+        display: true,
+        text: name,
+        font: {
+          size: 18,
+          weight: "bold",
+        },
+      },
+      legend: {
+        display: false,
       },
     },
-    legend: {
-      display: false,
-    },
-  },
-  responsive: true,
-};
-
-const Chart = ({ data }) => {
+    responsive: true,
+  };
   return (
     <>
       <Bar options={options} data={data} updateMode="active" />

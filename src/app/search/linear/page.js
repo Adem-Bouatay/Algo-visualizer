@@ -75,7 +75,7 @@ const App = () => {
         >
           ►
         </button>
-        <Chart data={data} />
+        <Chart data={data} name="Linear Search" />
         <h1 className="text-lg font-bold text-[#646464]">
           Number to search for:
         </h1>
