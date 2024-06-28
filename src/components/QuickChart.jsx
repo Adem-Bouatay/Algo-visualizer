@@ -46,21 +46,37 @@ const Chart = ({ initialData }) => {
   const [log, setLog] = useState(
     `original array = [${initialData.join(", ")}]\n`
   );
+
   const quickSort = async () => {
-    const sorter = (array) => {
+    const array = [...sortedData];
+    const logSteps = [`original array = [${array.join(", ")}]\n`];
+
+    const sorter = async (array) => {
       if (array.length <= 1) return array;
       const pivot = array.pop();
       const smaller = [];
       const larger = [];
       for (let i = 0; i < array.length; i++) {
-        if (array[i] < pivot) smaller.push(array[i]);
-        else larger.push(array[i]);
+        setCursor([array.length, i]);
+        await sleep(500);
+        if (array[i] < pivot) {
+          smaller.push(array[i]);
+        } else {
+          larger.push(array[i]);
+        }
       }
-      const result = [].concat(sorter(smaller));
+      const result = [].concat(await sorter(smaller));
       result.push(pivot);
-      return result.concat(sorter(larger));
+      const finalResult = result.concat(await sorter(larger));
+      setSortedData([...finalResult]);
+      logSteps.push(`step -> [${finalResult.join(", ")}]\n`);
+      return finalResult;
     };
-    sorter([14, 2, 6, 1, 8, 4]);
+
+    const result = await sorter(array);
+    setSortedData(result);
+    setLog(logSteps.join(""));
+    setCursor([-1, -1]);
   };
 
   const cursorColor = (context) => {
