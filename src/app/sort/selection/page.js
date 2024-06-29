@@ -19,21 +19,20 @@ const App = () => {
           className="w-full h-full resize-none p-2 bg-[#151515]"
           disabled
           defaultValue={`const array = [...sortedData];
-              let change = true;
-              while (change) {
-                change = false;
-                for (let i = 0; i < array.length - 1; i++) {
-                  setCursor([i, i + 1]);
-                  await sleep(200);
-                  if (array[i] > array[i + 1]) {
-                    const temp = array[i];
-                    array[i] = array[i + 1];
-                    array[i + 1] = temp;
-                    change = true;
-                    setSortedData([...array]);
-                  }
-                }
-              }
+                      let newLog = log;
+                      let index = 0;
+                      while (index < array.length - 1) {
+                        let min = index;
+                        for (let i = index + 1; i < array.length; i++) {
+                          setCursor([index, i]);
+                          await sleep(200);
+                          if (array[i] < array[min]) min = i;
+                        }
+                        const temp = array[index];
+                        array[index] = array[min];
+                        array[min] = temp;
+                        index++;
+                      }
             `}
         />
       </div>
