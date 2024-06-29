@@ -17,22 +17,23 @@ const App = () => {
         <textarea
           className="w-full h-full resize-none p-2 bg-[#151515]"
           disabled
-          defaultValue={`const array = [...sortedData];
-              let change = true;
-              while (change) {
-                change = false;
-                for (let i = 0; i < array.length - 1; i++) {
-                  setCursor([i, i + 1]);
-                  await sleep(200);
-                  if (array[i] > array[i + 1]) {
-                    const temp = array[i];
-                    array[i] = array[i + 1];
-                    array[i + 1] = temp;
-                    change = true;
-                    setSortedData([...array]);
-                  }
-                }
-              }
+          defaultValue={`const sorter = async (array) => {
+      if (array.length <= 1) return array;
+      const pivot = array.pop();
+      const smaller = [];
+      const larger = [];
+      for (let i = 0; i < array.length; i++) {
+        if (array[i] < pivot) {
+          smaller.push(array[i]);
+        } else {
+          larger.push(array[i]);
+        }
+      }
+      const result = [].concat(await sorter(smaller));
+      result.push(pivot);
+      const finalResult = result.concat(await sorter(larger));
+      return finalResult;
+    };
             `}
         />
       </div>
