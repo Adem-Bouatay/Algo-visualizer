@@ -15,23 +15,20 @@ const App = () => {
         <Chart initialData={data} labels={data} />
       </div>
       <CodeBlock
-        code={`const array = [...sortedData];
-              let change = true;
-              while (change) {
-                change = false;
-                for (let i = 0; i < array.length - 1; i++) {
-                  setCursor([i, i + 1]);
-                  await sleep(200);
-                  if (array[i] > array[i + 1]) {
-                    const temp = array[i];
-                    array[i] = array[i + 1];
-                    array[i + 1] = temp;
-                    change = true;
-                    setSortedData([...array]);
-                  }
-                }
-              }
-            `}
+        code={`const array = [...Data];
+let change = true;
+while (change) {
+    change = false;
+    for (let i = 0; i < array.length - 1; i++) {
+      setCursor([i, i + 1]);
+      if (array[i] > array[i + 1]) {
+        const temp = array[i];
+        array[i] = array[i + 1];
+        array[i + 1] = temp;
+        change = true;
+      }
+    }
+}`}
       />
     </>
   );

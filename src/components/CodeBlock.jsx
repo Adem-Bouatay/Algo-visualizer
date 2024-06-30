@@ -1,14 +1,11 @@
 import React from "react";
+import Highlight from "react-highlight";
 
 const CodeBlock = ({ code }) => {
   return (
     <div className="flex-1 border-l-2 rounded-l-2xl text-white">
       <div className="bg-black w-full h-full p-5">
-        <textarea
-          className="w-full h-full resize-none p-2 bg-[#151515]"
-          disabled
-          defaultValue={code}
-        />
+        <Highlight language="javascript">{code}</Highlight>
       </div>
     </div>
   );
