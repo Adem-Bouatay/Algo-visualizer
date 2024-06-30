@@ -3,6 +3,7 @@
 import React from "react";
 import Chart from "@/components/MergeChart";
 import { faker } from "@faker-js/faker";
+import CodeBlock from "@/components/CodeBlock";
 
 const labels = [
   0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
@@ -16,11 +17,8 @@ const App = () => {
       <div className="flex flex-col w-5/12 p-5 space-y-4 items-center">
         <Chart initialData={data} labels={data} />
       </div>
-      <div className="flex-1 p-5 border-l-2 rounded-l-3xl text-white">
-        <textarea
-          className="w-full h-full resize-none p-2 bg-[#151515]"
-          disabled
-          defaultValue={`const mergeSort = async () => {
+      <CodeBlock
+        code={`const mergeSort = async () => {
     const sliceAndDice = async (part) => {
       const result = [...sortedDataRef.current];
       let minIndex = result.indexOf(part[0]);
@@ -78,8 +76,7 @@ const App = () => {
     sorter([...sortedData]);
   };
             `}
-        />
-      </div>
+      />
     </>
   );
 };

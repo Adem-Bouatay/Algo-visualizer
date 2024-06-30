@@ -13,10 +13,10 @@ const SideBar = () => {
           Algo Visualizer
         </h1>
         <div className="flex flex-col space-y-2 font-medium">
-          <div className="flex-col py-2">
+          <div className="flex-col py-2 mt-5">
             <button
               type="button"
-              class="flex w-full items-center justify-between rounded-lg"
+              class="flex w-full items-center justify-between rounded-lg px-5 text-lg"
               aria-controls="disclosure-1"
               aria-expanded="false"
               onClick={() => setIsSortOpen(!isSortOpen)}
@@ -73,7 +73,7 @@ const SideBar = () => {
           <div className="flex-col py-2">
             <button
               type="button"
-              class="flex w-full items-center justify-between rounded-lg"
+              class="flex w-full items-center justify-between rounded-lg px-5 text-lg"
               aria-controls="disclosure-2"
               aria-expanded="false"
               onClick={() => setIsSearchOpen(!isSearchOpen)}
@@ -97,7 +97,7 @@ const SideBar = () => {
             <div className={`${isSearchOpen ? "" : "hidden"} flex flex-col`}>
               <Link
                 href="/search/linear"
-                className="p-2 text-center hover:bg-blue-300 rounded-md"
+                className="p-2 mt-5 text-center hover:bg-blue-300 rounded-md"
               >
                 Linear Search
               </Link>
