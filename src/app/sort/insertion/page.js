@@ -16,20 +16,18 @@ const App = () => {
       </div>
       <CodeBlock
         code={`const array = [...sortedData];
-                         let newLog = log;
-                         for (let i = 1; i < array.length; i++) {
-                           for (let j = i; j >= 0; j--) {
-                            if (array[j - 1] > array[j]) {
-                              const temp = array[j - 1];
-                              array[j - 1] = array[j];
-                              array[j] = temp;
-                            } else {
-                              break;
-                            }
-                           }
-                          }
-                         
-            `}
+let newLog = log;
+for (let i = 1; i < array.length; i++) {
+    for (let j = i; j >= 0; j--) {
+        if (array[j - 1] > array[j]) {
+            const temp = array[j - 1];
+            array[j - 1] = array[j];
+            array[j] = temp;
+        } else {
+            break;
+        }
+    }
+}`}
       />
     </>
   );

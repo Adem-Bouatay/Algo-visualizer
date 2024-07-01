@@ -16,23 +16,22 @@ const App = () => {
       </div>
       <CodeBlock
         code={`const sorter = async (array) => {
-      if (array.length <= 1) return array;
-      const pivot = array.pop();
-      const smaller = [];
-      const larger = [];
-      for (let i = 0; i < array.length; i++) {
+    if (array.length <= 1) return array;
+    const pivot = array.pop();
+    const smaller = [];
+    const larger = [];
+    for (let i = 0; i < array.length; i++) {
         if (array[i] < pivot) {
-          smaller.push(array[i]);
+            smaller.push(array[i]);
         } else {
-          larger.push(array[i]);
+            larger.push(array[i]);
         }
-      }
-      const result = [].concat(await sorter(smaller));
-      result.push(pivot);
-      const finalResult = result.concat(await sorter(larger));
-      return finalResult;
-    };
-            `}
+    }
+    const result = [].concat(await sorter(smaller));
+    result.push(pivot);
+    const finalResult = result.concat(await sorter(larger));
+    return finalResult;
+}`}
       />
     </>
   );

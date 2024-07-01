@@ -16,21 +16,18 @@ const App = () => {
       </div>
       <CodeBlock
         code={`const array = [...sortedData];
-                      let newLog = log;
-                      let index = 0;
-                      while (index < array.length - 1) {
-                        let min = index;
-                        for (let i = index + 1; i < array.length; i++) {
-                          setCursor([index, i]);
-                          await sleep(200);
-                          if (array[i] < array[min]) min = i;
-                        }
-                        const temp = array[index];
-                        array[index] = array[min];
-                        array[min] = temp;
-                        index++;
-                      }
-            `}
+let newLog = log;
+let index = 0;
+while (index < array.length - 1) {
+    let min = index;
+    for (let i = index + 1; i < array.length; i++) {
+        if (array[i] < array[min]) min = i;
+    }
+    const temp = array[index];
+    array[index] = array[min];
+    array[min] = temp;
+    index++;
+}`}
       />
     </>
   );

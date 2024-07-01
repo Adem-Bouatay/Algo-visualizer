@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Chart from "@/components/Chart";
 import { faker } from "@faker-js/faker";
+import CodeBlock from "@/components/CodeBlock";
 
 const labels = [
   0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
@@ -107,29 +108,30 @@ const App = () => {
           onChange={(e) => setNumber(parseInt(e.target.value))}
         />
       </div>
-      <div className="flex-1 p-5 border-l-2 rounded-l-3xl text-white">
-        <textarea
-          className="w-full h-full resize-none p-2 bg-[#151515]"
-          disabled
-          defaultValue={`const array = [...sortedData];
-              let change = true;
-              while (change) {
-                change = false;
-                for (let i = 0; i < array.length - 1; i++) {
-                  setCursor([i, i + 1]);
-                  await sleep(200);
-                  if (array[i] > array[i + 1]) {
-                    const temp = array[i];
-                    array[i] = array[i + 1];
-                    array[i + 1] = temp;
-                    change = true;
-                    setSortedData([...array]);
-                  }
-                }
-              }
-            `}
-        />
-      </div>
+      <CodeBlock
+        code={`const array = [...sortedData];
+let start = 0;
+let end = array.length - 1;
+while (start != end) {
+    setCursor([start, end]);
+    let mid1 = Math.floor(start + (end - start) / 3);
+    let mid2 = Math.floor(end - (end - start) / 3);
+    if (number === array[mid1]) {
+        alert("Number found");
+        return;
+    } else if (number === array[mid2]) {
+        alert("Number found");
+        return;
+    } else if (number < array[mid1]) {
+        end = mid1 - 1;
+    } else if (number < array[mid2]) {
+        end = mid2 - 1;
+        start = mid1 + 1;
+    } else {
+        start = mid2 + 1;
+    }
+}`}
+      />
     </>
   );
 };
