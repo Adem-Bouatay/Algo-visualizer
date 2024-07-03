@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Chart from "@/components/Chart";
+import Chart from "@/components/SearchChart";
 import { faker } from "@faker-js/faker";
 import CodeBlock from "@/components/CodeBlock";
+import Controls from "@/components/Controls";
 
 const labels = [
   0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
@@ -91,12 +92,7 @@ const App = () => {
   return (
     <>
       <div className="flex flex-col w-5/12 p-5 space-y-4 items-center">
-        <button
-          className="bg-slate-50 text-black rounded-lg p-2 text-sm font-semibold hover:bg-slate-300 active:bg-red-400"
-          onClick={ternarySearch}
-        >
-          ►
-        </button>
+        <Controls func={ternarySearch} />
         <Chart data={data} name="Ternary Search" />
         <h1 className="text-lg font-bold text-[#646464]">
           Number to search for:

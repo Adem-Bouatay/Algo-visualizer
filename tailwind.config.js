@@ -8,6 +8,7 @@ module.exports = {
   theme: {
     extend: {
       spacing: {
+        22: "88px",
         128: "28rem",
         150: "50rem",
       },

@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Chart from "@/components/Chart";
+import Chart from "@/components/SearchChart";
 import CodeBlock from "@/components/CodeBlock";
+import Controls from "@/components/Controls";
 import { faker } from "@faker-js/faker";
 
 const labels = [
@@ -81,12 +82,7 @@ const App = () => {
   return (
     <>
       <div className="flex flex-col w-5/12 p-5 space-y-4 items-center">
-        <button
-          className="bg-slate-50 text-black rounded-lg p-2 text-sm font-semibold hover:bg-slate-300 active:bg-red-400"
-          onClick={binarySearch}
-        >
-          ►
-        </button>
+        <Controls func={binarySearch} />
         <Chart data={data} name="Binary Search" />
         <h1 className="text-lg font-bold text-[#646464]">
           Number to search for:
