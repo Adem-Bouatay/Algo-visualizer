@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaPause, FaPlay } from "react-icons/fa";
 
-const Controls = ({ func }) => {
+const Controls = ({ func, speed }) => {
   const [clicked, setClicked] = useState(false);
   const handleClick = () => {
     setClicked(!clicked);
@@ -24,9 +24,11 @@ const Controls = ({ func }) => {
         Speed:
         <input
           className="ml-2 accent-[#F92672]"
+          onChange={speed}
           type="range"
-          min={0}
-          max={100}
+          step={25}
+          min={20}
+          max={120}
         />
       </div>
     </div>

@@ -13,9 +13,13 @@ const labels = [
 const initialData = labels.map(() => faker.number.int({ min: 0, max: 100 }));
 initialData.sort((a, b) => a - b);
 
+const controller = new AbortController();
+const { signal } = controller;
+
 const App = () => {
   const [number, setNumber] = useState(0);
   const [cursor, setCursor] = useState([0]);
+  const [speed, setSpeed] = useState(50);
   const [sortedData, setSortedData] = useState(initialData);
 
   const binarySearch = async () => {
@@ -24,6 +28,10 @@ const App = () => {
     let end = array.length - 1;
 
     while (start != end) {
+      if (signal.aborted) {
+        alert("aborted");
+        return;
+      }
       setCursor([start, end]);
       let midIndex = Math.floor((end + start) / 2);
       if (number === array[midIndex]) {
@@ -48,6 +56,8 @@ const App = () => {
   const sleep = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
   };
+
+  const handleSpeed = () => {};
 
   const [data, setData] = useState({
     labels: sortedData,
@@ -79,9 +89,17 @@ const App = () => {
       })),
     }));
   }, [cursor]);
+
   return (
     <>
       <div className="flex flex-col w-5/12 p-5 space-y-4 items-center">
+        <button
+          onClick={() => {
+            controller.abort();
+          }}
+        >
+          pause
+        </button>
         <Controls func={binarySearch} />
         <Chart data={data} name="Binary Search" />
         <h1 className="text-lg font-bold text-[#646464]">

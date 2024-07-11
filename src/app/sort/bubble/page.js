@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Chart from "@/components/SortChart";
 import CodeBlock from "@/components/CodeBlock";
 import { faker } from "@faker-js/faker";
@@ -16,20 +16,19 @@ const sleep = (ms) => {
 const App = () => {
   const [cursor, setCursor] = useState([0, 1]);
   const [sortedData, setSortedData] = useState(initialData);
-  const [log, setLog] = useState(
-    `original array = [${initialData.join(", ")}]\n`
-  );
+  const log = useRef(`original array = [${initialData.join(", ")}]\n`);
+  const speed = useRef(70);
 
   const bubbleSort = async () => {
     const array = [...sortedData];
     let change = true;
-    let newLog = log;
+    let newLog = log.current;
 
     while (change) {
       change = false;
       for (let i = 0; i < array.length - 1; i++) {
         setCursor([i, i + 1]);
-        await sleep(300);
+        await sleep(speed.current * 10);
         if (array[i] > array[i + 1]) {
           const temp = array[i];
           array[i] = array[i + 1];
@@ -37,7 +36,7 @@ const App = () => {
           change = true;
           setSortedData([...array]);
           newLog += `Swapped ${array[i]} and ${array[i + 1]}\n`;
-          setLog(newLog);
+          log.current = newLog;
         }
       }
     }
@@ -47,6 +46,10 @@ const App = () => {
   const cursorColor = (context) => {
     const index = context.dataIndex;
     return cursor.includes(index) ? "#ffff" : "#f472b6";
+  };
+
+  const handleSpeed = (e) => {
+    speed.current = 140 - Number(e.target.value);
   };
 
   const [data, setData] = useState({
@@ -82,8 +85,8 @@ const App = () => {
   return (
     <>
       <div className="flex flex-col w-5/12 p-5 space-y-4 items-center">
-        <Controls func={bubbleSort} />
-        <Chart data={data} name={"Bubble Sort"} log={log} />
+        <Controls func={bubbleSort} speed={handleSpeed} />
+        <Chart data={data} name={"Bubble Sort"} log={log.current} />
       </div>
       <CodeBlock
         code={`const array = [...Data];
