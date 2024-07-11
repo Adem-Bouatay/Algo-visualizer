@@ -9,7 +9,7 @@ const App = () => {
       <main className="flex flex-row">
         <SideBar />
         <div className="w-full flex flex-col items-center justify-between ">
-          <header className="bg-zinc-900 p-10 w-full space-y-2 flex flex-col items-center">
+          <header className="bg-[#161616] p-10 w-full space-y-2 flex flex-col items-center text-[#F92672]">
             <h2 className="text-3xl font-bold">
               Welcome to the Algo Visualizer
             </h2>

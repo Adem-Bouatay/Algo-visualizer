@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Chart from "@/components/SearchChart";
 import CodeBlock from "@/components/CodeBlock";
 import Controls from "@/components/Controls";
@@ -19,7 +19,7 @@ const { signal } = controller;
 const App = () => {
   const [number, setNumber] = useState(0);
   const [cursor, setCursor] = useState([0]);
-  const [speed, setSpeed] = useState(50);
+  const speed = useRef(70);
   const [sortedData, setSortedData] = useState(initialData);
 
   const binarySearch = async () => {
@@ -44,7 +44,7 @@ const App = () => {
       } else {
         start = midIndex + 1;
       }
-      await sleep(500);
+      await sleep(speed.current * 10);
     }
   };
 
@@ -57,7 +57,9 @@ const App = () => {
     return new Promise((resolve) => setTimeout(resolve, ms));
   };
 
-  const handleSpeed = () => {};
+  const handleSpeed = (e) => {
+    speed.current = 140 - Number(e.target.value);
+  };
 
   const [data, setData] = useState({
     labels: sortedData,
@@ -100,7 +102,7 @@ const App = () => {
         >
           pause
         </button>
-        <Controls func={binarySearch} />
+        <Controls func={binarySearch} speed={handleSpeed} />
         <Chart data={data} name="Binary Search" />
         <h1 className="text-lg font-bold text-[#646464]">
           Number to search for:

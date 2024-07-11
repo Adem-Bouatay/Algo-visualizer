@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Chart from "@/components/SearchChart";
 import { faker } from "@faker-js/faker";
 import CodeBlock from "@/components/CodeBlock";
@@ -17,6 +17,7 @@ const App = () => {
   const [number, setNumber] = useState(0);
   const [cursor, setCursor] = useState([0]);
   const [sortedData, setSortedData] = useState(initialData);
+  const speed = useRef(70);
 
   const ternarySearch = async () => {
     const array = [...sortedData];
@@ -46,7 +47,7 @@ const App = () => {
         start = mid2 + 1;
       }
 
-      await sleep(500);
+      await sleep(speed.current * 10);
     }
   };
 
@@ -57,6 +58,10 @@ const App = () => {
 
   const sleep = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
+  };
+
+  const handleSpeed = (e) => {
+    speed.current = 140 - Number(e.target.value);
   };
 
   const [data, setData] = useState({
@@ -92,7 +97,7 @@ const App = () => {
   return (
     <>
       <div className="flex flex-col w-5/12 p-5 space-y-4 items-center">
-        <Controls func={ternarySearch} />
+        <Controls func={ternarySearch} speed={handleSpeed} />
         <Chart data={data} name="Ternary Search" />
         <h1 className="text-lg font-bold text-[#646464]">
           Number to search for:

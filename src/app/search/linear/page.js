@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Chart from "@/components/SearchChart";
 import Controls from "@/components/Controls";
 import CodeBlock from "@/components/CodeBlock";
@@ -12,6 +12,7 @@ const initialData = labels.map(() => faker.number.int({ min: 0, max: 100 }));
 const App = () => {
   const [number, setNumber] = useState(0);
   const [cursor, setCursor] = useState([0]);
+  const speed = useRef(70);
   const [sortedData, setSortedData] = useState(initialData);
 
   const linearSearch = async () => {
@@ -24,7 +25,7 @@ const App = () => {
         return;
       }
       setCursor([i]);
-      await sleep(300);
+      await sleep(speed.current * 10);
     }
     setCursor([]);
   };
@@ -36,6 +37,10 @@ const App = () => {
 
   const sleep = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
+  };
+
+  const handleSpeed = (e) => {
+    speed.current = 140 - Number(e.target.value);
   };
 
   const [data, setData] = useState({
@@ -71,7 +76,7 @@ const App = () => {
   return (
     <>
       <div className="flex flex-col w-5/12 p-5 space-y-4 items-center">
-        <Controls func={linearSearch} />
+        <Controls func={linearSearch} speed={handleSpeed} />
         <Chart data={data} name="Linear Search" />
         <h1 className="text-lg font-bold text-[#646464]">
           Number to search for:
