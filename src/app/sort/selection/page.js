@@ -1,6 +1,6 @@
 "use client"; // Add this directive at the top
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import CodeBlock from "@/components/CodeBlock";
 import Chart from "@/components/SortChart";
 import { faker } from "@faker-js/faker";
@@ -16,18 +16,18 @@ const sleep = (ms) => {
 const App = () => {
   const [cursor, setCursor] = useState([-1, -1]);
   const [sortedData, setSortedData] = useState(initialData);
-  const [log, setLog] = useState(
-    `original array = [${initialData.join(", ")}]\n`
-  );
+  const log = useRef(`original array = [${initialData.join(", ")}]\n`);
+  const speed = useRef(70);
+
   const selectionSort = async () => {
     const array = [...sortedData];
-    let newLog = log;
+    let newLog = log.current;
     let index = 0;
     while (index < array.length - 1) {
       let min = index;
       for (let i = index + 1; i < array.length; i++) {
         setCursor([index, i]);
-        await sleep(200);
+        await sleep(speed.current * 10);
         if (array[i] < array[min]) min = i;
       }
       const temp = array[index];
@@ -35,7 +35,7 @@ const App = () => {
       array[min] = temp;
       setSortedData([...array]);
       newLog += `Swapped ${array[index]} and ${array[min]}\n`;
-      setLog(newLog);
+      log.current = newLog;
       index++;
     }
     setCursor([]);
@@ -61,6 +61,10 @@ const App = () => {
     ],
   });
 
+  const handleSpeed = (e) => {
+    speed.current = 140 - Number(e.target.value);
+  };
+
   useEffect(() => {
     setData((prevData) => ({
       labels: sortedData,
@@ -83,8 +87,8 @@ const App = () => {
   return (
     <>
       <div className="flex flex-col w-5/12 p-5 space-y-4 items-center">
-        <Controls func={selectionSort} />
-        <Chart data={data} name={"Selection Sort"} log={log} />
+        <Controls func={selectionSort} speed={handleSpeed} />
+        <Chart data={data} name={"Selection Sort"} log={log.current} />
       </div>
       <CodeBlock
         code={`const array = [...sortedData];

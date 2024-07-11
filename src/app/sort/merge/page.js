@@ -20,9 +20,9 @@ const App = () => {
   const [cursor, setCursor] = useState([-1, -1]);
   const [sortedData, setSortedData] = useState(initialData);
   const sortedDataRef = useRef(initialData);
-  const [log, setLog] = useState(
-    `original array = [${initialData.join(", ")}]\n`
-  );
+  const log = useRef(`original array = [${initialData.join(", ")}]\n`);
+  const speed = useRef(70);
+
   const mergeSort = async () => {
     const sliceAndDice = async (part) => {
       const result = [...sortedDataRef.current];
@@ -37,11 +37,11 @@ const App = () => {
       for (let i = minIndex, j = 0; i <= maxIndex; i++, j++) {
         setCursor([minIndex, i]);
         result[i] = part[j];
-        await sleep(250);
+        await sleep(speed.current * 0.75 * 10);
       }
       setSortedData(result);
       setCursor([]);
-      await sleep(400);
+      await sleep(speed.current * 10);
     };
 
     const merge = async (left, right) => {
@@ -90,6 +90,10 @@ const App = () => {
       : "#f472b6";
   };
 
+  const handleSpeed = (e) => {
+    speed.current = 140 - Number(e.target.value);
+  };
+
   const [data, setData] = useState({
     labels: sortedData,
     datasets: [
@@ -125,8 +129,8 @@ const App = () => {
   return (
     <>
       <div className="flex flex-col w-5/12 p-5 space-y-4 items-center">
-        <Controls func={mergeSort} />
-        <Chart data={data} name={"Merge Sort"} log={log} />
+        <Controls func={mergeSort} speed={handleSpeed} />
+        <Chart data={data} name={"Merge Sort"} log={log.current} />
       </div>
       <CodeBlock
         code={`const mergeSort = async () => {

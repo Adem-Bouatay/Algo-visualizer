@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Chart from "@/components/SortChart";
 import { faker } from "@faker-js/faker";
 import CodeBlock from "@/components/CodeBlock";
@@ -17,9 +17,8 @@ const sleep = (ms) => {
 const App = () => {
   const [cursor, setCursor] = useState([-1, -1]);
   const [sortedData, setSortedData] = useState(initialData);
-  const [log, setLog] = useState(
-    `original array = [${initialData.join(", ")}]\n`
-  );
+  const log = useRef(`original array = [${initialData.join(", ")}]\n`);
+  const speed = useRef(70);
 
   const quickSort = async () => {
     const array = [...sortedData];
@@ -32,7 +31,7 @@ const App = () => {
       const larger = [];
       for (let i = 0; i < array.length; i++) {
         setCursor([array.length, i]);
-        await sleep(500);
+        await sleep(speed.current * 10);
         if (array[i] < pivot) {
           smaller.push(array[i]);
         } else {
@@ -49,7 +48,7 @@ const App = () => {
 
     const result = await sorter(array);
     setSortedData(result);
-    setLog(logSteps.join(""));
+    log.current = logSteps.join("");
     setCursor([-1, -1]);
   };
 
@@ -60,6 +59,10 @@ const App = () => {
       : index === cursor[1]
       ? "#ffff"
       : "#f472b6";
+  };
+
+  const handleSpeed = (e) => {
+    speed.current = 140 - Number(e.target.value);
   };
 
   const [data, setData] = useState({
@@ -95,8 +98,8 @@ const App = () => {
   return (
     <>
       <div className="flex flex-col w-5/12 p-5 space-y-4 items-center">
-        <Controls func={quickSort} />
-        <Chart data={data} name={"Quick Sort"} log={log} />
+        <Controls func={quickSort} speed={handleSpeed} />
+        <Chart data={data} name={"Quick Sort"} log={log.current} />
       </div>
       <CodeBlock
         code={`const sorter = async (array) => {
